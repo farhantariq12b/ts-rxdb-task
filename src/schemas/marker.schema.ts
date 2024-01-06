@@ -20,11 +20,17 @@ export const markerSchemaLiteral = {
     status: {
       type: "string",
     },
+    top: {
+      type: "string",
+    },
+    left: {
+      type: "string",
+    },
     createdBy: {
       type: "number",
       minimum: 0,
       maximum: 100,
-    },
+    }
   },
 } as const; 
 const schemaTyped = toTypedRxJsonSchema(markerSchemaLiteral);

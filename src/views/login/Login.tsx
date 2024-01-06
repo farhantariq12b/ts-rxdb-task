@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { getDatabase } from '../../schemas/db';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store/hooks';
+import { setUserDetails } from '../../reducers/userSlice';
 
 function Login() {
   const [username, setUsername] = useState<string>('');
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -17,14 +21,24 @@ function Login() {
       const db = await getDatabase();
       const usersCollection = db.users;
 
-      const newUser = await usersCollection.insert({
-        id: Date.now(),
-        username: username,
+      const query = usersCollection.findOne({
+        selector: {
+          username,
+        },
       });
+  
+      let user = await query.exec();
 
-      console.log('User entry added:', newUser.toJSON());
+      if (!user) {
+        user = await usersCollection.insert({
+          id: Date.now(),
+          username: username,
+        });  
+      }
 
       setUsername('');
+      dispatch(setUserDetails(user.toJSON()))
+      localStorage.setItem('user_id', user.id)
       navigate('/home');
     } catch (error) {
       console.error('Error adding user entry:', error);

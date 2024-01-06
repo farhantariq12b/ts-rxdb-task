@@ -1,1 +1,0 @@
-export const MACHINE_IMAGE_URL = 'https://previews.123rf.com/images/parmenov/parmenov1802/parmenov180200071/95660952-architectural-plan-of-a-house-layout-of-the-apartment-top-view-with-the-furniture-in-the-drawing.jpg';

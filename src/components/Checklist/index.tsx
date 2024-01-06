@@ -2,18 +2,7 @@ import React, { useState } from "react";
 import arrowDownSVG from "../../assets/svgs/arrow-down.svg";
 import arrowUpSVG from "../../assets/svgs/arrow-up.svg";
 import Item from "../../components/Item";
-
-interface ItemDetail {
-  title: string;
-  description: string;
-  status?: "blocked" | "notApplicable" | "completed" | "empty";
-  descriptionStatus?:
-    | "blocked"
-    | "info"
-    | "completed"
-    | "warning"
-    | "empty";
-}
+import { ItemDetail } from "../../interfaces/marker";
 
 interface ChecklistProps {
   name: string;
@@ -65,16 +54,22 @@ const Checklist: React.FC<ChecklistProps> = ({
             </div>
           </div>
           <div className="gap-5 flex flex-col pt-5">
-            {items.map((item, index) => (
-              <Item
-                key={index}
-                title={item.title}
-                description={item.description}
-                status={item.status}
-                descriptionStatus={item.descriptionStatus}
-                handleClick={() => onUpdateItemStatus(index)}
-              />
-            ))}
+            {items.length ? (
+              items.map((item, index) => (
+                <Item
+                  key={index}
+                  title={item.title}
+                  description={item.description}
+                  status={item.status}
+                  descriptionStatus={item.descriptionStatus}
+                  handleClick={() => onUpdateItemStatus(index)}
+                />
+              ))
+            ) : (
+              <p className="px-5 font-bold">
+                Kindly Add new items. No items found.
+              </p>
+            )}
           </div>
           <button
             data-testid="add-new-item"

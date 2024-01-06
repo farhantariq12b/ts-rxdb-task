@@ -3,9 +3,11 @@ import { Tooltip } from 'react-tooltip';
 import { generateInitials } from '../../utils';
 import { CustomMarkerProps } from '../../interfaces/marker';
 import { MarkerComponentProps } from 'react-image-marker';
+import { useNavigate } from 'react-router-dom';
 
 const CustomMarker: React.FC<MarkerComponentProps> = (props) => {
-  const { itemNumber, content, status, createdBy } = props as CustomMarkerProps;
+  const navigate = useNavigate();
+  const { itemNumber, id, name, createdBy } = props as CustomMarkerProps;
 
   return (
     <div className="relative inline-block">
@@ -24,18 +26,15 @@ const CustomMarker: React.FC<MarkerComponentProps> = (props) => {
         className="flex justify-center"
       >
         <div>
-          Task Name: {content}
+          Task Name: {name}
           <br />
-          Status: {status}
+          Created by: {createdBy}
           <br />
-          <button className="block mt-2 px-3 py-2 bg-blue-500 text-white border-none rounded cursor-pointer transition duration-300 ease-in-out hover:bg-blue-700">
+          <button className="block mt-2 px-3 py-2 bg-blue-500 text-white border-none rounded cursor-pointer transition duration-300 ease-in-out hover:bg-blue-700" onClick={() => navigate(`/task-detail/${id}`)}>
             View more
           </button>
         </div>
       </Tooltip>
-      {status === 'error' && (
-        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-red-500"></span>
-      )}
     </div>
   );
 };

@@ -1,7 +1,13 @@
-import { createRxDatabase } from 'rxdb';
+import { addRxPlugin, createRxDatabase } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { markerSchema } from "./marker.schema";
 import { userSchema } from './user.schema';
+import { checklistSchema } from './checklist.schema';
+import { RxDBMigrationPlugin } from 'rxdb/plugins/migration';
+import { RxDBUpdatePlugin } from 'rxdb/plugins/update';
+
+addRxPlugin(RxDBUpdatePlugin);
+addRxPlugin(RxDBMigrationPlugin);
 
 const collections = {
   markers: {
@@ -9,6 +15,9 @@ const collections = {
   },
   users: {
     schema: userSchema,
+  },
+  checklists: {
+    schema: checklistSchema,
   }
 }
 
