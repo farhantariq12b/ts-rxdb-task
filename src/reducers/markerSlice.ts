@@ -180,7 +180,6 @@ export const markerSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(fetchMarkerById.rejected, (state, action) => {
-        console.log('here', action.error)
         state.isLoading = false;
       });
   },
